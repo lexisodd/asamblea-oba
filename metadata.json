@@ -1,0 +1,6 @@
+{
+  "name": "Asamblea OBA - 20 años",
+  "description": "Hub de itinerarios oficiales por color de credencial para la Asamblea OBA - 20 años de la Dirección Nacional de Bomberos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
