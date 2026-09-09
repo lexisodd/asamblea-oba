@@ -7,7 +7,9 @@ import {
   Shield,
   AlertCircle,
   X,
-  Loader2
+  Loader2,
+  ArrowRight,
+  MessageCircle
 } from 'lucide-react';
 
 /**
@@ -16,15 +18,18 @@ import {
 export interface GroupItem {
   id: string;
   name: string;
+  modalTitle?: string;
   colorLabel: string;
   hexColor: string;
-  badgeBg: string;
-  badgeText: string;
+  badgeBg?: string;
+  badgeText?: string;
+  cardBg: string;
   borderAccent: string;
-  softBg: string;
+  arrowBg: string;
   previewUrl: string;
   externalUrl: string;
   active: boolean;
+  isWhite?: boolean;
   sublabel?: string;
   badgeCode?: string;
 }
@@ -38,68 +43,79 @@ const SHARED_TEST_EXTERNAL_URL = 'https://drive.google.com/file/d/1soYggvRJRnacp
 /**
  * Centralized dataset for delegation itineraries.
  * Edit this array directly to update links, colors, or group statuses.
- * Exclusively 4 official colors: Rojo, Verde, Azul y Amarillo.
+ * Official colors: Rojo, Verde, Azul, Amarillo, plus Organización.
  */
 export const GROUPS_DATA: GroupItem[] = [
   {
     id: 'delegacion-roja',
-    name: 'Delegación Roja',
-    colorLabel: 'Cinta Roja',
+    name: 'Rojo',
+    modalTitle: 'Rojo',
+    colorLabel: 'Rojo',
     badgeCode: 'GRUPO 1',
     hexColor: '#DC2626',
-    badgeBg: 'bg-red-600 text-white',
-    badgeText: 'text-red-700 bg-red-50 border-red-200',
-    borderAccent: 'border-l-red-600 hover:border-red-400',
-    softBg: 'group-hover:bg-red-50/50',
+    cardBg: 'bg-red-50/85 hover:bg-red-100/80 border-red-200/90',
+    borderAccent: 'border-l-red-600',
+    arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
-    sublabel: 'Comandantes y Oficiales Superiores',
   },
   {
     id: 'delegacion-verde',
-    name: 'Delegación Verde',
-    colorLabel: 'Cinta Verde',
+    name: 'Verde',
+    modalTitle: 'Verde',
+    colorLabel: 'Verde',
     badgeCode: 'GRUPO 2',
     hexColor: '#16A34A',
-    badgeBg: 'bg-emerald-600 text-white',
-    badgeText: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-    borderAccent: 'border-l-emerald-600 hover:border-emerald-400',
-    softBg: 'group-hover:bg-emerald-50/50',
+    cardBg: 'bg-emerald-50/85 hover:bg-emerald-100/80 border-emerald-200/90',
+    borderAccent: 'border-l-emerald-600',
+    arrowBg: 'bg-white/90 border border-emerald-200/60 text-emerald-900 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
-    sublabel: 'Equipos Técnicos y Brigadas Especiales',
   },
   {
     id: 'delegacion-azul',
-    name: 'Delegación Azul',
-    colorLabel: 'Cinta Azul',
+    name: 'Azul',
+    modalTitle: 'Azul',
+    colorLabel: 'Azul',
     badgeCode: 'GRUPO 3',
     hexColor: '#2563EB',
-    badgeBg: 'bg-blue-600 text-white',
-    badgeText: 'text-blue-700 bg-blue-50 border-blue-200',
-    borderAccent: 'border-l-blue-600 hover:border-blue-400',
-    softBg: 'group-hover:bg-blue-50/50',
+    cardBg: 'bg-blue-50/85 hover:bg-blue-100/80 border-blue-200/90',
+    borderAccent: 'border-l-blue-600',
+    arrowBg: 'bg-white/90 border border-blue-200/60 text-blue-900 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
-    sublabel: 'Jefaturas de Operaciones y Rescate',
   },
   {
     id: 'delegacion-amarilla',
-    name: 'Delegación Amarilla',
-    colorLabel: 'Cinta Amarilla',
+    name: 'Amarillo',
+    modalTitle: 'Amarillo',
+    colorLabel: 'Amarillo',
     badgeCode: 'GRUPO 4',
     hexColor: '#CA8A04',
-    badgeBg: 'bg-amber-500 text-slate-950',
-    badgeText: 'text-amber-800 bg-amber-50 border-amber-200',
-    borderAccent: 'border-l-amber-500 hover:border-amber-400',
-    softBg: 'group-hover:bg-amber-50/50',
+    cardBg: 'bg-amber-50/85 hover:bg-amber-100/80 border-amber-200/90',
+    borderAccent: 'border-l-amber-500',
+    arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-900 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
-    sublabel: 'Logística, Prevención y Enlaces',
+  },
+  {
+    id: 'organizacion',
+    name: 'ORGANIZACIÓN',
+    modalTitle: 'ORGANIZACIÓN',
+    colorLabel: 'Organización',
+    badgeCode: 'STAFF',
+    hexColor: '#FFFFFF',
+    isWhite: true,
+    cardBg: 'bg-white hover:bg-slate-50/90 border-slate-300/90',
+    borderAccent: 'border-l-slate-800',
+    arrowBg: 'bg-slate-100 border border-slate-200/80 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900',
+    previewUrl: SHARED_TEST_PREVIEW_URL,
+    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    active: true,
   },
 ];
 
@@ -295,7 +311,7 @@ export default function App() {
               >
                 {!imageError ? (
                   <img
-                    src="/logo.jpeg"
+                    src="./logooba.jpeg"
                     alt="Logo Oficial Asamblea OBA - 20 años"
                     className="w-full h-full object-contain rounded-full"
                     referrerPolicy="no-referrer"
@@ -410,41 +426,47 @@ export default function App() {
                       transition: { duration: 0.38, ease: 'easeOut' },
                     },
                   }}
-                  className={`group relative w-full min-h-[68px] rounded-xl bg-white border border-slate-200/90 border-l-[6px] ${group.borderAccent} shadow-[0_4px_14px_rgba(15,23,42,0.09),0_1px_3px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.13),0_2px_6px_rgba(15,23,42,0.06)] active:scale-[0.98] transition-all duration-150 p-3.5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 cursor-pointer ${group.softBg}`}
+                  className={`group relative w-full min-h-[68px] rounded-xl ${group.cardBg} border border-l-[8px] ${group.borderAccent} shadow-[0_4px_14px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.12),0_2px_6px_rgba(15,23,42,0.06)] active:scale-[0.98] transition-all duration-150 p-3.5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 cursor-pointer`}
                 >
                   {/* Left Side: Color Badge Swatch + Text Content */}
-                  <div className="flex items-center gap-3 min-w-0 pr-2">
+                  <div className="flex items-center gap-3.5 min-w-0 pr-2">
                     {/* Visual Color Pill / Ribbon indicator */}
                     <div
-                      className="relative w-11 h-11 rounded-lg flex items-center justify-center shrink-0 shadow-inner ring-1 ring-black/10 transition-transform group-hover:scale-105"
-                      style={{ backgroundColor: group.hexColor }}
+                      className={`relative w-11 h-11 rounded-lg flex items-center justify-center shrink-0 shadow-inner ring-1 transition-transform group-hover:scale-105 ${
+                        group.isWhite
+                          ? 'bg-white ring-slate-300 border border-slate-200'
+                          : 'ring-black/10'
+                      }`}
+                      style={group.isWhite ? undefined : { backgroundColor: group.hexColor }}
                       aria-hidden="true"
                     >
-                      <FileText className="w-5 h-5 text-white drop-shadow-sm" />
+                      <FileText
+                        className={`w-5 h-5 drop-shadow-sm ${
+                          group.isWhite ? 'text-slate-800' : 'text-white'
+                        }`}
+                      />
                       {/* Lanyard eyelet accent dot */}
-                      <div className="absolute top-1 w-1.5 h-1.5 rounded-full bg-white/70" />
+                      <div
+                        className={`absolute top-1 w-1.5 h-1.5 rounded-full ${
+                          group.isWhite ? 'bg-slate-400' : 'bg-white/70'
+                        }`}
+                      />
                     </div>
 
-                    {/* Information */}
+                    {/* Information: Color Name or ORGANIZACIÓN */}
                     <div className="text-left truncate">
-                      <span className="font-bold text-slate-900 text-base leading-snug tracking-tight block">
+                      <span className="font-bold text-slate-900 text-base sm:text-lg leading-tight tracking-tight block">
                         {group.name}
                       </span>
-                      {group.sublabel && (
-                        <p className="text-xs text-slate-500 mt-0.5 truncate leading-tight">
-                          {group.sublabel}
-                        </p>
-                      )}
                     </div>
                   </div>
 
-                  {/* Right Side: Action Indicator with Document Icon and 'Ir a ver itinerario' */}
-                  <div className="shrink-0 pl-1">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-slate-100 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-active:bg-slate-950 transition-colors shadow-2xs">
-                      <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-slate-500 group-hover:text-amber-300 transition-colors" />
-                      <span className="text-xs font-semibold whitespace-nowrap">
-                        Ir a ver itinerario
-                      </span>
+                  {/* Right Side: Action Arrow Indicator without text */}
+                  <div className="shrink-0 pl-2">
+                    <div
+                      className={`w-10 h-10 rounded-xl ${group.arrowBg} flex items-center justify-center transition-all duration-150 shadow-2xs group-hover:scale-105 active:scale-95`}
+                    >
+                      <ArrowRight className="w-5 h-5 transition-transform duration-150 group-hover:translate-x-0.5" />
                     </div>
                   </div>
                 </motion.button>
@@ -455,17 +477,30 @@ export default function App() {
 
         {/* Footer Section */}
         <footer id="footer-oba" className="pt-8 pb-4 text-center mt-6">
-          {/* Logistics Assistance Notice */}
+          {/* Logistics Assistance Notice & WhatsApp Contact */}
           <div
             id="assistance-message"
-            className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-100/90 border border-slate-200 text-left text-xs text-slate-600 leading-relaxed"
+            className="p-4 rounded-xl bg-slate-100/90 border border-slate-200 text-left text-xs text-slate-700 leading-relaxed shadow-xs space-y-3"
           >
-            <Info className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
-            <p>
-              En caso de dudas, acércate a la{' '}
-              <strong className="text-slate-800 font-semibold">mesa de acreditación</strong> o a los
-              coordinadores del evento.
-            </p>
+            <div className="flex items-start gap-2.5">
+              <Info className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
+              <p className="text-slate-700 leading-relaxed">
+                En caso de dudas, acércate a uno de los Oficiales identificados como parte de la organización o contacta por whatsapp
+              </p>
+            </div>
+
+            <div className="pt-0.5">
+              <a
+                id="btn-whatsapp-support"
+                href="https://wa.me/59897352820?text=link%20de%20prueba"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium text-xs shadow-sm hover:shadow transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-100 shrink-0" />
+                <span>Contactar por WhatsApp</span>
+              </a>
+            </div>
           </div>
 
           {/* Institutional Copyright & Metadata */}
@@ -474,9 +509,6 @@ export default function App() {
               Dirección Nacional de Bomberos
             </p>
             <p>© {currentYear} Todos los derechos reservados.</p>
-            <p className="text-[11px] text-slate-400">
-              Plataforma optimizada para smartphones y redes de bajo ancho de banda.
-            </p>
           </div>
         </footer>
       </main>
@@ -501,8 +533,10 @@ export default function App() {
               <div className="flex items-center gap-2.5 min-w-0 pr-1">
                 {/* Color Dot Swatch */}
                 <span
-                  className="w-3.5 h-3.5 rounded-full shrink-0 ring-2 ring-white/30"
-                  style={{ backgroundColor: activeModalGroup.hexColor }}
+                  className={`w-3.5 h-3.5 rounded-full shrink-0 ring-2 ring-white/30 ${
+                    activeModalGroup.isWhite ? 'bg-white border border-slate-400' : ''
+                  }`}
+                  style={activeModalGroup.isWhite ? undefined : { backgroundColor: activeModalGroup.hexColor }}
                   aria-hidden="true"
                 />
                 <div className="min-w-0">
@@ -510,11 +544,8 @@ export default function App() {
                     id="modal-group-title"
                     className="text-sm sm:text-base font-bold text-white truncate leading-tight"
                   >
-                    {activeModalGroup.name}
+                    {activeModalGroup.modalTitle || activeModalGroup.name}
                   </h2>
-                  <p className="text-[11px] text-slate-400 truncate leading-tight">
-                    Itinerario Semanal Oficial
-                  </p>
                 </div>
               </div>
 
@@ -577,7 +608,7 @@ export default function App() {
                 id="pdf-document-iframe"
                 key={activeModalGroup.id}
                 src={activeModalGroup.previewUrl}
-                title={`Itinerario - ${activeModalGroup.name}`}
+                title={`Itinerario - ${activeModalGroup.modalTitle || activeModalGroup.name}`}
                 className="w-full h-full border-0 flex-1 bg-white"
                 allow="autoplay"
                 onLoad={() => setIsIframeLoading(false)}
