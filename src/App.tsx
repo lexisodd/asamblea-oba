@@ -355,7 +355,7 @@ export default function App() {
             <div className="pt-0.5">
               <a
                 id="btn-whatsapp-support"
-                href="https://wa.me/59897352820?text=link%20de%20prueba"
+                href="https://wa.me/59899379851"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-medium text-xs shadow-sm hover:shadow transition-colors"
