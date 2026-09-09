@@ -11,6 +11,7 @@ import {
   ArrowRight,
   MessageCircle
 } from 'lucide-react';
+import logoOg from './assets/logoog.jpeg';
 
 /**
  * Interface representing a delegation group and its itinerary link.
@@ -119,144 +120,8 @@ export const GROUPS_DATA: GroupItem[] = [
   },
 ];
 
-/**
- * High-fidelity vector rendition of the official 20th Anniversary OBA Uruguay Emblem
- * used as an immediate fallback or vector representation if the raster image is unavailable.
- */
-function OfficialObaEmblemSvg() {
-  return (
-    <svg
-      viewBox="0 0 200 200"
-      className="w-full h-full drop-shadow-md"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-label="Emblema Oficial Asamblea OBA - 20 años Uruguay"
-    >
-      {/* Outer Golden Border Rim */}
-      <circle cx="100" cy="100" r="96" fill="#D4AF37" stroke="#997A15" strokeWidth="2" />
-      <circle cx="100" cy="100" r="92" fill="#FBF7E4" stroke="#D4AF37" strokeWidth="1.5" />
-      <circle cx="100" cy="100" r="88" fill="#0A2540" stroke="#E5C158" strokeWidth="2" />
-
-      {/* Outer Text: ASAMBLEA ANUAL OBA */}
-      <path
-        id="text-path-oba"
-        d="M 28 100 A 72 72 0 0 1 172 100"
-        fill="none"
-      />
-      <text fill="#FFFFFF" fontSize="11" fontWeight="800" letterSpacing="2">
-        <textPath href="#text-path-oba" startOffset="50%" textAnchor="middle">
-          ★ ASAMBLEA ANUAL OBA ★
-        </textPath>
-      </text>
-
-      {/* Inner White Field */}
-      <circle cx="100" cy="100" r="70" fill="#FFFFFF" stroke="#D4AF37" strokeWidth="2" />
-
-      {/* Waving Uruguay Flags in Background */}
-      <path d="M 40 85 Q 55 78 70 85 Q 85 92 100 85 L 100 115 Q 85 122 70 115 Q 55 108 40 115 Z" fill="#0038A8" opacity="0.15" />
-      <path d="M 100 85 Q 115 78 130 85 Q 145 92 160 85 L 160 115 Q 145 122 130 115 Q 115 108 100 115 Z" fill="#0038A8" opacity="0.15" />
-
-      {/* Top Inner Medallion: OBA Firefighters Badge */}
-      <circle cx="100" cy="65" r="28" fill="#0A2540" stroke="#D4AF37" strokeWidth="2" />
-      <circle cx="100" cy="65" r="26" fill="#FFFFFF" />
-      <circle cx="100" cy="65" r="22" fill="#0A2540" />
-
-      {/* Crossed Golden Fire Axes & Ladder */}
-      <line x1="88" y1="77" x2="112" y2="53" stroke="#E5C158" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="112" y1="77" x2="88" y2="53" stroke="#E5C158" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="97" y1="50" x2="97" y2="80" stroke="#D4AF37" strokeWidth="1.5" />
-      <line x1="103" y1="50" x2="103" y2="80" stroke="#D4AF37" strokeWidth="1.5" />
-      <line x1="97" y1="56" x2="103" y2="56" stroke="#D4AF37" strokeWidth="1.5" />
-      <line x1="97" y1="62" x2="103" y2="62" stroke="#D4AF37" strokeWidth="1.5" />
-      <line x1="97" y1="68" x2="103" y2="68" stroke="#D4AF37" strokeWidth="1.5" />
-      <line x1="97" y1="74" x2="103" y2="74" stroke="#D4AF37" strokeWidth="1.5" />
-
-      {/* Map of Americas silhouette */}
-      <path d="M 96 56 Q 102 55 104 59 Q 102 65 99 68 Q 97 72 101 75" stroke="#FFFFFF" strokeWidth="1.5" fill="none" opacity="0.8" />
-
-      {/* Sol de Mayo (Sun of Uruguay) on left */}
-      <circle cx="58" cy="85" r="7" fill="#FBBF24" stroke="#D97706" strokeWidth="1" />
-      <path d="M58 74 L58 77 M58 93 L58 96 M47 85 L50 85 M66 85 L69 85 M50 77 L52 79 M64 91 L66 93 M50 93 L52 91 M64 79 L66 77" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round" />
-
-      {/* Laurel Wreath */}
-      <path d="M 60 120 Q 55 100 68 85" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-      <path d="M 140 120 Q 145 100 132 85" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-
-      {/* Golden "20" Display */}
-      <text
-        x="100"
-        y="126"
-        textAnchor="middle"
-        fontSize="36"
-        fontWeight="900"
-        fontFamily="serif"
-        fill="url(#goldGradient)"
-        stroke="#855800"
-        strokeWidth="1"
-        style={{ filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.25))' }}
-      >
-        20
-      </text>
-      <text
-        x="100"
-        y="138"
-        textAnchor="middle"
-        fontSize="9"
-        fontWeight="800"
-        letterSpacing="2"
-        fill="#0A2540"
-      >
-        — AÑOS —
-      </text>
-
-      {/* Lower Navy Blue Ribbon with URUGUAY */}
-      <path
-        d="M 35 152 L 52 144 L 148 144 L 165 152 L 152 166 L 142 160 L 100 163 L 58 160 L 48 166 Z"
-        fill="#0A2540"
-        stroke="#D4AF37"
-        strokeWidth="2"
-      />
-      <text
-        x="100"
-        y="157"
-        textAnchor="middle"
-        fontSize="12"
-        fontWeight="900"
-        letterSpacing="3"
-        fill="#FFFFFF"
-      >
-        ★ URUGUAY ★
-      </text>
-
-      {/* Bottom Rim: 2006 - 2026 */}
-      <text
-        x="100"
-        y="180"
-        textAnchor="middle"
-        fontSize="9"
-        fontWeight="700"
-        letterSpacing="2"
-        fill="#0A2540"
-      >
-        2006 - 2026
-      </text>
-
-      {/* Gradients */}
-      <defs>
-        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFF1B0" />
-          <stop offset="35%" stopColor="#F59E0B" />
-          <stop offset="70%" stopColor="#D97706" />
-          <stop offset="100%" stopColor="#92400E" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
 export default function App() {
   const currentYear = new Date().getFullYear();
-  const [imageError, setImageError] = useState(false);
 
   // In-App PDF Modal state
   const [activeModalGroup, setActiveModalGroup] = useState<GroupItem | null>(null);
@@ -307,19 +172,17 @@ export default function App() {
             <div className="flex justify-center mb-4">
               <div
                 id="brand-logo-container"
-                className="relative inline-flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-full shadow-lg ring-2 ring-slate-200/80 bg-white p-1 overflow-hidden"
+                className="relative inline-flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-2xl shadow-md ring-1 ring-slate-200/90 bg-white p-2 overflow-hidden"
               >
-                {!imageError ? (
-                  <img
-                    src="./logooba.jpeg"
-                    alt="Logo Oficial Asamblea OBA - 20 años"
-                    className="w-full h-full object-contain rounded-full"
-                    referrerPolicy="no-referrer"
-                    onError={() => setImageError(true)}
-                  />
-                ) : (
-                  <OfficialObaEmblemSvg />
-                )}
+                <img
+                  src={logoOg}
+                  alt="Logo Oficial Asamblea OBA - 20 años"
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    e.currentTarget.src = './logoog.jpeg';
+                  }}
+                />
               </div>
             </div>
 
