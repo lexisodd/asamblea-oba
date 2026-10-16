@@ -51,6 +51,7 @@ const SHARED_TEST_EXTERNAL_URL = 'https://drive.google.com/file/d/1soYggvRJRnacp
  * 5. Representante de la CEPIGD (Violeta / morado)
  * 6. Staff (Verde)
  * 7. Visita (Amarillo / ocre)
+ * 8. ORGANIZACIÓN (Blanco)
  */
 export const GROUPS_DATA: GroupItem[] = [
   {
@@ -147,6 +148,21 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-amber-50/90 hover:bg-amber-100/90 border-amber-200/90',
     borderAccent: 'border-l-amber-500',
     arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-950 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
+    previewUrl: SHARED_TEST_PREVIEW_URL,
+    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    active: true,
+  },
+  {
+    id: 'organizacion',
+    name: 'ORGANIZACIÓN',
+    modalTitle: 'ORGANIZACIÓN',
+    colorLabel: 'Blanco',
+    badgeCode: 'ORGANIZACIÓN',
+    hexColor: '#FFFFFF',
+    isWhite: true,
+    cardBg: 'bg-white hover:bg-slate-50 border-slate-200 shadow-sm',
+    borderAccent: 'border-l-white',
+    arrowBg: 'bg-slate-100 border border-slate-200/80 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
