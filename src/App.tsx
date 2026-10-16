@@ -43,18 +43,24 @@ const SHARED_TEST_EXTERNAL_URL = 'https://drive.google.com/file/d/1soYggvRJRnacp
 
 /**
  * Centralized dataset for delegation itineraries.
- * Edit this array directly to update links, colors, or group statuses.
- * Official colors: Rojo, Verde, Azul, Amarillo, plus Organización.
+ * Main buttons in exact requested order:
+ * 1. Representante Académico (Rojo)
+ * 2. Representante Asambleario (Azul)
+ * 3. Miembro Adherente (Azul oscuro / petróleo)
+ * 4. Patrocinador (Rojo)
+ * 5. Representante de la CEPIGD (Violeta / morado)
+ * 6. Staff (Verde)
+ * 7. Visita (Amarillo / ocre)
  */
 export const GROUPS_DATA: GroupItem[] = [
   {
-    id: 'delegacion-roja',
-    name: 'Rojo',
-    modalTitle: 'Rojo',
+    id: 'representante-academico',
+    name: 'Representante Académico',
+    modalTitle: 'Representante Académico',
     colorLabel: 'Rojo',
-    badgeCode: 'GRUPO 1',
+    badgeCode: 'ACADÉMICO',
     hexColor: '#DC2626',
-    cardBg: 'bg-red-50/85 hover:bg-red-100/80 border-red-200/90',
+    cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
     borderAccent: 'border-l-red-600',
     arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
     previewUrl: SHARED_TEST_PREVIEW_URL,
@@ -62,27 +68,13 @@ export const GROUPS_DATA: GroupItem[] = [
     active: true,
   },
   {
-    id: 'delegacion-verde',
-    name: 'Verde',
-    modalTitle: 'Verde',
-    colorLabel: 'Verde',
-    badgeCode: 'GRUPO 2',
-    hexColor: '#16A34A',
-    cardBg: 'bg-emerald-50/85 hover:bg-emerald-100/80 border-emerald-200/90',
-    borderAccent: 'border-l-emerald-600',
-    arrowBg: 'bg-white/90 border border-emerald-200/60 text-emerald-900 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
-    active: true,
-  },
-  {
-    id: 'delegacion-azul',
-    name: 'Azul',
-    modalTitle: 'Azul',
+    id: 'representante-asambleario',
+    name: 'Representante Asambleario',
+    modalTitle: 'Representante Asambleario',
     colorLabel: 'Azul',
-    badgeCode: 'GRUPO 3',
+    badgeCode: 'ASAMBLEA',
     hexColor: '#2563EB',
-    cardBg: 'bg-blue-50/85 hover:bg-blue-100/80 border-blue-200/90',
+    cardBg: 'bg-blue-50/90 hover:bg-blue-100/90 border-blue-200/90',
     borderAccent: 'border-l-blue-600',
     arrowBg: 'bg-white/90 border border-blue-200/60 text-blue-900 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600',
     previewUrl: SHARED_TEST_PREVIEW_URL,
@@ -90,30 +82,71 @@ export const GROUPS_DATA: GroupItem[] = [
     active: true,
   },
   {
-    id: 'delegacion-amarilla',
-    name: 'Amarillo',
-    modalTitle: 'Amarillo',
-    colorLabel: 'Amarillo',
-    badgeCode: 'GRUPO 4',
-    hexColor: '#CA8A04',
-    cardBg: 'bg-amber-50/85 hover:bg-amber-100/80 border-amber-200/90',
-    borderAccent: 'border-l-amber-500',
-    arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-900 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
+    id: 'miembro-adherente',
+    name: 'Miembro Adherente',
+    modalTitle: 'Miembro Adherente',
+    colorLabel: 'Azul oscuro / Petróleo',
+    badgeCode: 'ADHERENTE',
+    hexColor: '#0E4D64',
+    cardBg: 'bg-cyan-50/90 hover:bg-cyan-100/90 border-cyan-200/90',
+    borderAccent: 'border-l-[#0E4D64]',
+    arrowBg: 'bg-white/90 border border-cyan-200/60 text-[#0E4D64] group-hover:bg-[#0E4D64] group-hover:text-white group-hover:border-[#0E4D64]',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
   },
   {
-    id: 'organizacion',
-    name: 'ORGANIZACIÓN',
-    modalTitle: 'ORGANIZACIÓN',
-    colorLabel: 'Organización',
+    id: 'patrocinador',
+    name: 'Patrocinador',
+    modalTitle: 'Patrocinador',
+    colorLabel: 'Rojo',
+    badgeCode: 'PATROCINADOR',
+    hexColor: '#DC2626',
+    cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
+    borderAccent: 'border-l-red-600',
+    arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
+    previewUrl: SHARED_TEST_PREVIEW_URL,
+    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    active: true,
+  },
+  {
+    id: 'representante-cepigd',
+    name: 'Representante de la CEPIGD',
+    modalTitle: 'Representante de la CEPIGD',
+    colorLabel: 'Violeta / Morado',
+    badgeCode: 'CEPIGD',
+    hexColor: '#7C3AED',
+    cardBg: 'bg-purple-50/90 hover:bg-purple-100/90 border-purple-200/90',
+    borderAccent: 'border-l-purple-600',
+    arrowBg: 'bg-white/90 border border-purple-200/60 text-purple-900 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600',
+    previewUrl: SHARED_TEST_PREVIEW_URL,
+    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    active: true,
+  },
+  {
+    id: 'staff',
+    name: 'Staff',
+    modalTitle: 'Staff',
+    colorLabel: 'Verde',
     badgeCode: 'STAFF',
-    hexColor: '#FFFFFF',
-    isWhite: true,
-    cardBg: 'bg-white hover:bg-slate-50/90 border-slate-300/90',
-    borderAccent: 'border-l-slate-800',
-    arrowBg: 'bg-slate-100 border border-slate-200/80 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900',
+    hexColor: '#16A34A',
+    cardBg: 'bg-emerald-50/90 hover:bg-emerald-100/90 border-emerald-200/90',
+    borderAccent: 'border-l-emerald-600',
+    arrowBg: 'bg-white/90 border border-emerald-200/60 text-emerald-900 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
+    previewUrl: SHARED_TEST_PREVIEW_URL,
+    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    active: true,
+  },
+  {
+    id: 'visita',
+    name: 'Visita',
+    modalTitle: 'Visita',
+    colorLabel: 'Amarillo / Ocre',
+    badgeCode: 'VISITA',
+    hexColor: '#D97706',
+    cardBg: 'bg-amber-50/90 hover:bg-amber-100/90 border-amber-200/90',
+    borderAccent: 'border-l-amber-500',
+    arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-950 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
     previewUrl: SHARED_TEST_PREVIEW_URL,
     externalUrl: SHARED_TEST_EXTERNAL_URL,
     active: true,
@@ -213,11 +246,11 @@ export default function App() {
               id="subheading-instruction"
               className="mt-2.5 text-sm text-slate-600 max-w-xs mx-auto leading-relaxed"
             >
-              Selecciona el color asignado a tu credencial para ver tu itinerario semanal
+              Selecciona tu rol o credencial para ver tu itinerario semanal
             </p>
           </header>
 
-          {/* Groups Listing (Itinerary In-App Buttons: 4 Colors - Rojo, Verde, Azul, Amarillo) */}
+          {/* Groups Listing (Itinerary In-App Buttons) */}
           <motion.section
             id="itineraries-list"
             aria-label="Listado de Itinerarios por Delegación"
@@ -292,7 +325,7 @@ export default function App() {
                   className={`group relative w-full min-h-[68px] rounded-xl ${group.cardBg} border border-l-[8px] ${group.borderAccent} shadow-[0_4px_14px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.12),0_2px_6px_rgba(15,23,42,0.06)] active:scale-[0.98] transition-all duration-150 p-3.5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 cursor-pointer`}
                 >
                   {/* Left Side: Color Badge Swatch + Text Content */}
-                  <div className="flex items-center gap-3.5 min-w-0 pr-2">
+                  <div className="flex items-center gap-3.5 min-w-0 pr-2 flex-1">
                     {/* Visual Color Pill / Ribbon indicator */}
                     <div
                       className={`relative w-11 h-11 rounded-lg flex items-center justify-center shrink-0 shadow-inner ring-1 transition-transform group-hover:scale-105 ${
@@ -316,9 +349,9 @@ export default function App() {
                       />
                     </div>
 
-                    {/* Information: Color Name or ORGANIZACIÓN */}
-                    <div className="text-left truncate">
-                      <span className="font-bold text-slate-900 text-base sm:text-lg leading-tight tracking-tight block">
+                    {/* Information: Role / Credential Name */}
+                    <div className="text-left min-w-0 flex-1">
+                      <span className="font-bold text-slate-900 text-sm sm:text-base leading-snug tracking-tight block">
                         {group.name}
                       </span>
                     </div>
