@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
   FileText,
@@ -11,6 +11,7 @@ import {
   Compass,
 } from 'lucide-react';
 import logoOg from './assets/logoog.jpeg';
+import { PdfViewerModal } from './components/PdfViewerModal';
 
 /**
  * Interface representing a delegation group and its itinerary link.
@@ -30,14 +31,17 @@ export interface GroupItem {
   externalUrl: string;
   active: boolean;
   isWhite?: boolean;
+  isEmbeddedPdf?: boolean;
   sublabel?: string;
   badgeCode?: string;
 }
 
 /**
- * Official shared URL for delegation itineraries (interactive Canva web embed).
+ * Official Google Drive PDF link for the Organización delegation itinerary.
+ * Automatically converted to Google Drive embed/preview format.
  */
-const SHARED_CANVA_URL = 'https://tftsep2024.my.canva.site/representante-asambleario';
+export const ORGANIZACION_DRIVE_PDF_URL =
+  'https://drive.google.com/file/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs/preview';
 
 /**
  * Official registration link for recreational activities.
@@ -55,11 +59,10 @@ const WHATSAPP_URL = 'https://wa.me/59899379851';
  * 1. Representante Académico (Rojo)
  * 2. Representante Asambleario (Azul)
  * 3. Miembro Adherente (Azul oscuro / petróleo)
- * 4. Patrocinador (Rojo)
+ * 4. Patrocinadores (Rojo)
  * 5. Representante de la CEPIGD (Violeta / morado)
- * 6. Staff (Verde)
- * 7. Visita (Amarillo / ocre)
- * 8. ORGANIZACIÓN (Blanco)
+ * 6. Visita (Amarillo / ocre)
+ * 7. ORGANIZACIÓN (Blanco - PDF embebido de Google Drive)
  */
 export const GROUPS_DATA: GroupItem[] = [
   {
@@ -72,8 +75,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
     borderAccent: 'border-l-red-600',
     arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/representante-acad-mico',
+    externalUrl: 'https://tftsep2024.my.canva.site/representante-acad-mico',
     active: true,
   },
   {
@@ -86,8 +89,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-blue-50/90 hover:bg-blue-100/90 border-blue-200/90',
     borderAccent: 'border-l-blue-600',
     arrowBg: 'bg-white/90 border border-blue-200/60 text-blue-900 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/representante-asambleario',
+    externalUrl: 'https://tftsep2024.my.canva.site/representante-asambleario',
     active: true,
   },
   {
@@ -100,22 +103,22 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-cyan-50/90 hover:bg-cyan-100/90 border-cyan-200/90',
     borderAccent: 'border-l-[#0E4D64]',
     arrowBg: 'bg-white/90 border border-cyan-200/60 text-[#0E4D64] group-hover:bg-[#0E4D64] group-hover:text-white group-hover:border-[#0E4D64]',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/miembro-adherente',
+    externalUrl: 'https://tftsep2024.my.canva.site/miembro-adherente',
     active: true,
   },
   {
-    id: 'patrocinador',
-    name: 'Patrocinador',
-    modalTitle: 'Patrocinador',
+    id: 'patrocinadores',
+    name: 'Patrocinadores',
+    modalTitle: 'Patrocinadores',
     colorLabel: 'Rojo',
-    badgeCode: 'PATROCINADOR',
+    badgeCode: 'PATROCINADORES',
     hexColor: '#DC2626',
     cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
     borderAccent: 'border-l-red-600',
     arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/patrocinadores',
+    externalUrl: 'https://tftsep2024.my.canva.site/patrocinadores',
     active: true,
   },
   {
@@ -128,22 +131,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-purple-50/90 hover:bg-purple-100/90 border-purple-200/90',
     borderAccent: 'border-l-purple-600',
     arrowBg: 'bg-white/90 border border-purple-200/60 text-purple-900 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
-    active: true,
-  },
-  {
-    id: 'staff',
-    name: 'Staff',
-    modalTitle: 'Staff',
-    colorLabel: 'Verde',
-    badgeCode: 'STAFF',
-    hexColor: '#16A34A',
-    cardBg: 'bg-emerald-50/90 hover:bg-emerald-100/90 border-emerald-200/90',
-    borderAccent: 'border-l-emerald-600',
-    arrowBg: 'bg-white/90 border border-emerald-200/60 text-emerald-900 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/cepigd',
+    externalUrl: 'https://tftsep2024.my.canva.site/cepigd',
     active: true,
   },
   {
@@ -156,8 +145,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-amber-50/90 hover:bg-amber-100/90 border-amber-200/90',
     borderAccent: 'border-l-amber-500',
     arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-950 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: 'https://tftsep2024.my.canva.site/visita',
+    externalUrl: 'https://tftsep2024.my.canva.site/visita',
     active: true,
   },
   {
@@ -168,17 +157,19 @@ export const GROUPS_DATA: GroupItem[] = [
     badgeCode: 'ORGANIZACIÓN',
     hexColor: '#FFFFFF',
     isWhite: true,
+    isEmbeddedPdf: true,
     cardBg: 'bg-white hover:bg-slate-50 border-slate-200 shadow-sm',
     borderAccent: 'border-l-white',
     arrowBg: 'bg-slate-100 border border-slate-200/80 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900',
-    previewUrl: SHARED_CANVA_URL,
-    externalUrl: SHARED_CANVA_URL,
+    previewUrl: ORGANIZACION_DRIVE_PDF_URL,
+    externalUrl: ORGANIZACION_DRIVE_PDF_URL,
     active: true,
   },
 ];
 
 export default function App() {
   const currentYear = new Date().getFullYear();
+  const [selectedPdfGroup, setSelectedPdfGroup] = useState<GroupItem | null>(null);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between py-6 px-4 sm:px-6">
@@ -294,6 +285,69 @@ export default function App() {
                     </div>
                     <AlertCircle className="w-5 h-5 text-slate-400 shrink-0 ml-2" />
                   </motion.div>
+                );
+              }
+
+              if (group.isEmbeddedPdf) {
+                return (
+                  <motion.button
+                    key={group.id}
+                    id={`btn-${group.id}`}
+                    type="button"
+                    onClick={() => setSelectedPdfGroup(group)}
+                    aria-label={`Ver itinerario de ${group.name} en PDF`}
+                    variants={{
+                      hidden: { opacity: 0, y: 16 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.38, ease: 'easeOut' },
+                      },
+                    }}
+                    className={`group relative w-full min-h-[68px] rounded-xl ${group.cardBg} border border-l-[8px] ${group.borderAccent} shadow-[0_4px_14px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.12),0_2px_6px_rgba(15,23,42,0.06)] active:scale-[0.98] transition-all duration-150 p-3.5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 cursor-pointer text-left`}
+                  >
+                    {/* Left Side: Color Badge Swatch + Text Content */}
+                    <div className="flex items-center gap-3.5 min-w-0 pr-2 flex-1">
+                      {/* Visual Color Pill / Ribbon indicator */}
+                      <div
+                        className={`relative w-11 h-11 rounded-lg flex items-center justify-center shrink-0 shadow-inner ring-1 transition-transform group-hover:scale-105 ${
+                          group.isWhite
+                            ? 'bg-white ring-slate-300 border border-slate-200'
+                            : 'ring-black/10'
+                        }`}
+                        style={group.isWhite ? undefined : { backgroundColor: group.hexColor }}
+                        aria-hidden="true"
+                      >
+                        <FileText
+                          className={`w-5 h-5 drop-shadow-sm ${
+                            group.isWhite ? 'text-slate-800' : 'text-white'
+                          }`}
+                        />
+                        {/* Lanyard eyelet accent dot */}
+                        <div
+                          className={`absolute top-1 w-1.5 h-1.5 rounded-full ${
+                            group.isWhite ? 'bg-slate-400' : 'bg-white/70'
+                          }`}
+                        />
+                      </div>
+
+                      {/* Information: Role / Credential Name */}
+                      <div className="text-left min-w-0 flex-1">
+                        <span className="font-bold text-slate-900 text-sm sm:text-base leading-snug tracking-tight block">
+                          {group.name}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right Side: Action Arrow Indicator without text */}
+                    <div className="shrink-0 pl-2">
+                      <div
+                        className={`w-10 h-10 rounded-xl ${group.arrowBg} flex items-center justify-center transition-all duration-150 shadow-2xs group-hover:scale-105 active:scale-95`}
+                      >
+                        <ArrowRight className="w-5 h-5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                      </div>
+                    </div>
+                  </motion.button>
                 );
               }
 
@@ -445,6 +499,15 @@ export default function App() {
           <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.63C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.57 20.16 9.12 19.77 7.85 19.02L7.55 18.84L4.43 19.66L5.26 16.62L5.06 16.31C4.24 15 3.8 13.48 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16ZM16.57 14.45C16.32 14.33 15.1 13.73 14.88 13.65C14.65 13.57 14.48 13.53 14.32 13.77C14.15 14.02 13.68 14.57 13.53 14.73C13.39 14.9 13.24 14.92 12.99 14.8C12.75 14.67 11.96 14.41 11.03 13.58C10.3 12.93 9.81 12.13 9.67 11.88C9.52 11.64 9.65 11.5 9.77 11.38C9.88 11.27 10.02 11.09 10.14 10.95C10.27 10.8 10.31 10.69 10.39 10.53C10.47 10.36 10.43 10.22 10.37 10.1C10.31 9.97 9.81 8.76 9.61 8.26C9.41 7.78 9.2 7.84 9.05 7.84C8.91 7.83 8.74 7.83 8.58 7.83C8.41 7.83 8.15 7.89 7.92 8.14C7.7 8.39 7.07 8.98 7.07 10.18C7.07 11.39 7.95 12.55 8.07 12.72C8.2 12.88 9.8 15.35 12.25 16.41C12.83 16.66 13.29 16.81 13.64 16.92C14.22 17.11 14.76 17.08 15.18 17.02C15.65 16.95 16.62 16.43 16.83 15.85C17.03 15.28 17.03 14.79 16.97 14.69C16.91 14.58 16.75 14.52 16.57 14.45Z" />
         </svg>
       </motion.a>
+
+      {/* Modal visor de PDF embebido para Organización */}
+      <PdfViewerModal
+        isOpen={!!selectedPdfGroup}
+        onClose={() => setSelectedPdfGroup(null)}
+        title={selectedPdfGroup ? selectedPdfGroup.name : 'ORGANIZACIÓN'}
+        pdfUrl={selectedPdfGroup ? (selectedPdfGroup.previewUrl || selectedPdfGroup.externalUrl) : ''}
+        externalUrl={selectedPdfGroup ? selectedPdfGroup.externalUrl : ''}
+      />
 
     </div>
   );
