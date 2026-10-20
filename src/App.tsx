@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import {
   FileText,
@@ -6,10 +6,9 @@ import {
   Info,
   Shield,
   AlertCircle,
-  X,
-  Loader2,
   ArrowRight,
-  MessageCircle
+  MessageCircle,
+  Compass,
 } from 'lucide-react';
 import logoOg from './assets/logoog.jpeg';
 
@@ -36,10 +35,14 @@ export interface GroupItem {
 }
 
 /**
- * Common test Google Drive preview link for in-app iframe viewing.
+ * Official shared URL for delegation itineraries (interactive Canva web embed).
  */
-const SHARED_TEST_PREVIEW_URL = 'https://drive.google.com/file/d/1soYggvRJRnacpKY7lV1Ea8IznYt_U-lI/preview';
-const SHARED_TEST_EXTERNAL_URL = 'https://drive.google.com/file/d/1soYggvRJRnacpKY7lV1Ea8IznYt_U-lI/view?usp=sharing';
+const SHARED_CANVA_URL = 'https://tftsep2024.my.canva.site/representante-asambleario';
+
+/**
+ * Official registration link for recreational activities.
+ */
+const RECREATIONAL_ACTIVITIES_URL = 'https://inscripciondnb.github.io/formulariosdnb/';
 
 /**
  * Centralized dataset for delegation itineraries.
@@ -64,8 +67,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
     borderAccent: 'border-l-red-600',
     arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -78,8 +81,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-blue-50/90 hover:bg-blue-100/90 border-blue-200/90',
     borderAccent: 'border-l-blue-600',
     arrowBg: 'bg-white/90 border border-blue-200/60 text-blue-900 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -92,8 +95,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-cyan-50/90 hover:bg-cyan-100/90 border-cyan-200/90',
     borderAccent: 'border-l-[#0E4D64]',
     arrowBg: 'bg-white/90 border border-cyan-200/60 text-[#0E4D64] group-hover:bg-[#0E4D64] group-hover:text-white group-hover:border-[#0E4D64]',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -106,8 +109,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-red-50/90 hover:bg-red-100/90 border-red-200/90',
     borderAccent: 'border-l-red-600',
     arrowBg: 'bg-white/90 border border-red-200/60 text-red-900 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -120,8 +123,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-purple-50/90 hover:bg-purple-100/90 border-purple-200/90',
     borderAccent: 'border-l-purple-600',
     arrowBg: 'bg-white/90 border border-purple-200/60 text-purple-900 group-hover:bg-purple-600 group-hover:text-white group-hover:border-purple-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -134,8 +137,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-emerald-50/90 hover:bg-emerald-100/90 border-emerald-200/90',
     borderAccent: 'border-l-emerald-600',
     arrowBg: 'bg-white/90 border border-emerald-200/60 text-emerald-900 group-hover:bg-emerald-600 group-hover:text-white group-hover:border-emerald-600',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -148,8 +151,8 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-amber-50/90 hover:bg-amber-100/90 border-amber-200/90',
     borderAccent: 'border-l-amber-500',
     arrowBg: 'bg-white/90 border border-amber-200/60 text-amber-950 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
   {
@@ -163,49 +166,14 @@ export const GROUPS_DATA: GroupItem[] = [
     cardBg: 'bg-white hover:bg-slate-50 border-slate-200 shadow-sm',
     borderAccent: 'border-l-white',
     arrowBg: 'bg-slate-100 border border-slate-200/80 text-slate-700 group-hover:bg-slate-900 group-hover:text-white group-hover:border-slate-900',
-    previewUrl: SHARED_TEST_PREVIEW_URL,
-    externalUrl: SHARED_TEST_EXTERNAL_URL,
+    previewUrl: SHARED_CANVA_URL,
+    externalUrl: SHARED_CANVA_URL,
     active: true,
   },
 ];
 
 export default function App() {
   const currentYear = new Date().getFullYear();
-
-  // In-App PDF Modal state
-  const [activeModalGroup, setActiveModalGroup] = useState<GroupItem | null>(null);
-  const [isIframeLoading, setIsIframeLoading] = useState(true);
-
-  // Handle opening modal for a group
-  const handleOpenModal = (group: GroupItem) => {
-    setActiveModalGroup(group);
-    setIsIframeLoading(true);
-  };
-
-  // Handle closing modal
-  const handleCloseModal = () => {
-    setActiveModalGroup(null);
-    setIsIframeLoading(true);
-  };
-
-  // Lock body scroll and handle Escape key when modal is open
-  useEffect(() => {
-    if (activeModalGroup) {
-      document.body.style.overflow = 'hidden';
-      const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          handleCloseModal();
-        }
-      };
-      window.addEventListener('keydown', handleKeyDown);
-      return () => {
-        document.body.style.overflow = '';
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    } else {
-      document.body.style.overflow = '';
-    }
-  }, [activeModalGroup]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between py-6 px-4 sm:px-6">
@@ -325,11 +293,12 @@ export default function App() {
               }
 
               return (
-                <motion.button
+                <motion.a
                   key={group.id}
                   id={`btn-${group.id}`}
-                  type="button"
-                  onClick={() => handleOpenModal(group)}
+                  href={group.externalUrl || group.previewUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variants={{
                     hidden: { opacity: 0, y: 16 },
                     visible: {
@@ -381,9 +350,53 @@ export default function App() {
                       <ArrowRight className="w-5 h-5 transition-transform duration-150 group-hover:translate-x-0.5" />
                     </div>
                   </div>
-                </motion.button>
+                </motion.a>
               );
             })}
+
+            {/* Botón ACTIVIDADES RECREATIVAS con redirección directa */}
+            <motion.a
+              id="btn-actividades-recreativas"
+              href={RECREATIONAL_ACTIVITIES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              variants={{
+                hidden: { opacity: 0, y: 16 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.38, ease: 'easeOut' },
+                },
+              }}
+              className="group relative w-full min-h-[68px] rounded-xl bg-orange-50/90 hover:bg-orange-100/90 border border-orange-200/90 border-l-[8px] border-l-orange-500 shadow-[0_4px_14px_rgba(15,23,42,0.08),0_1px_3px_rgba(15,23,42,0.05)] hover:shadow-[0_8px_22px_rgba(15,23,42,0.12),0_2px_6px_rgba(15,23,42,0.06)] active:scale-[0.98] transition-all duration-150 p-3.5 flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 cursor-pointer text-slate-800"
+            >
+              {/* Left Side: Color Badge Swatch + Text Content */}
+              <div className="flex items-center gap-3.5 min-w-0 pr-2 flex-1">
+                {/* Visual Color Pill / Ribbon indicator */}
+                <div
+                  className="relative w-11 h-11 rounded-lg flex items-center justify-center shrink-0 shadow-inner ring-1 ring-black/10 bg-orange-500 transition-transform group-hover:scale-105"
+                  aria-hidden="true"
+                >
+                  <Compass className="w-5 h-5 drop-shadow-sm text-white" />
+                  {/* Lanyard eyelet accent dot */}
+                  <div className="absolute top-1 w-1.5 h-1.5 rounded-full bg-white/70" />
+                </div>
+
+                {/* Information: Title */}
+                <div className="text-left min-w-0 flex-1">
+                  <span className="font-bold text-slate-900 text-sm sm:text-base leading-snug tracking-tight block">
+                    ACTIVIDADES RECREATIVAS
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Side: Action Indicator (External Link) */}
+              <div className="shrink-0 pl-2">
+                <div className="w-10 h-10 rounded-xl bg-white/90 border border-orange-200/60 text-orange-950 group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 flex items-center justify-center transition-all duration-150 shadow-2xs group-hover:scale-105 active:scale-95">
+                  <ExternalLink className="w-5 h-5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                </div>
+              </div>
+            </motion.a>
           </motion.section>
         </div>
 
@@ -424,111 +437,6 @@ export default function App() {
           </div>
         </footer>
       </main>
-
-      {/* Fullscreen In-App PDF Viewer Modal */}
-      {activeModalGroup && (
-        <div
-          id="pdf-modal-container"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-group-title"
-          className="fixed inset-0 z-50 flex flex-col bg-slate-950/80 backdrop-blur-xs animate-in fade-in duration-200"
-        >
-          {/* Main Modal Window */}
-          <div className="flex flex-col w-full h-full bg-white sm:max-w-5xl sm:h-[94vh] sm:my-auto sm:mx-auto sm:rounded-2xl sm:overflow-hidden sm:shadow-2xl sm:ring-1 sm:ring-slate-900/10">
-            {/* Fixed Top Bar */}
-            <header
-              id="modal-header-bar"
-              className="w-full bg-slate-900 text-white px-3 sm:px-5 py-3 flex items-center justify-between shadow-md shrink-0 border-b border-slate-800 gap-2"
-            >
-              {/* Left: Group Identifier & Color Chip */}
-              <div className="flex items-center gap-2.5 min-w-0 pr-1">
-                {/* Color Dot Swatch */}
-                <span
-                  className={`w-3.5 h-3.5 rounded-full shrink-0 ring-2 ring-white/30 ${
-                    activeModalGroup.isWhite ? 'bg-white border border-slate-400' : ''
-                  }`}
-                  style={activeModalGroup.isWhite ? undefined : { backgroundColor: activeModalGroup.hexColor }}
-                  aria-hidden="true"
-                />
-                <div className="min-w-0">
-                  <h2
-                    id="modal-group-title"
-                    className="text-sm sm:text-base font-bold text-white truncate leading-tight"
-                  >
-                    {activeModalGroup.modalTitle || activeModalGroup.name}
-                  </h2>
-                </div>
-              </div>
-
-              {/* Right: Controls (External Link & Close Button) */}
-              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-                {/* Secondary Button: Open in External Browser */}
-                <a
-                  id="btn-open-external-browser"
-                  href={activeModalGroup.externalUrl || activeModalGroup.previewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-200 hover:text-white transition-colors border border-slate-700 shadow-2xs focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  title="Abrir documento en pestaña o navegador externo"
-                >
-                  <ExternalLink className="w-3.5 h-3.5 shrink-0 text-amber-400" />
-                  <span className="text-[11px] sm:text-xs font-medium leading-tight">
-                    <span className="hidden sm:inline text-slate-300">¿Problema para visualizar? </span>
-                    <span className="sm:hidden text-slate-300">¿Problemas? </span>
-                    <span className="text-amber-300 font-bold underline">Click aquí</span>
-                  </span>
-                </a>
-
-                {/* Primary Close Button (X) */}
-                <button
-                  id="btn-close-modal"
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-red-400 cursor-pointer shrink-0"
-                  aria-label="Cerrar visor de itinerario"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </header>
-
-            {/* Modal Body with subtle loader & Google Drive Iframe Viewer */}
-            <div className="relative flex-1 w-full bg-slate-100 overflow-hidden flex flex-col items-center justify-center">
-              {/* Subtle Loading State */}
-              {isIframeLoading && (
-                <div
-                  id="iframe-loading-indicator"
-                  className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-50/95 gap-3 p-4 transition-opacity duration-300"
-                >
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md border border-slate-200">
-                    <Loader2 className="w-6 h-6 text-slate-700 animate-spin" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-slate-800">
-                      Cargando itinerario en PDF...
-                    </p>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Conectando con el visor seguro de documentos
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* In-App PDF Viewer Iframe */}
-              <iframe
-                id="pdf-document-iframe"
-                key={activeModalGroup.id}
-                src={activeModalGroup.previewUrl}
-                title={`Itinerario - ${activeModalGroup.modalTitle || activeModalGroup.name}`}
-                className="w-full h-full border-0 flex-1 bg-white"
-                allow="autoplay"
-                onLoad={() => setIsIframeLoading(false)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
